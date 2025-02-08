@@ -1,0 +1,50 @@
+PUSHING:
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('checkout') {
+            steps {
+                git 'https://github.com/faisal-korejo/dockerproject.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'docker build -t port .'
+            }
+        }
+        stage('tag') {
+            steps {
+                sh 'docker tag port $repo'
+            }
+        }
+        stage('push') {
+            steps {
+                sh 'docker login -u faisal045 -p Raham@#123'
+                sh 'docker push $repo'
+            }
+        }
+    }
+}
+
+
+
+DEPLOY:
+
+pipeline {
+    agent any
+
+    stages {
+        stage('check') {
+            steps {
+                git 'https://github.com/faisal-korejo/dockerproject.git'
+            }
+        }
+        stage('stack') {
+            steps {
+                sh 'docker stack deploy -c docker-compose.yml fk'
+            }
+        }
+    }
+}
