@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  fk:
+    image: faisal045/fk:latest
+    ports:
+      - "81:80"
+    deploy:
+      replicas: 2
